@@ -14,19 +14,24 @@ public class Dialogue : MonoBehaviour {
 	private Color white = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
+	Vector3 offset = new Vector3(-60, -38, 0);
+
 	string[] lines = new string[] { "First text", "Second text", "Third text", "Fourth text", };
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 		fadingIn = fadingOut = false;
 		bubbleIndex = 0;
-		DisplayText (bubbleIndex);
+	}
+
+	void StartScene () {
+		DisplayText (bubbleIndex, offset);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Check for input, advance text if left click
-		if (Input.GetMouseButtonDown (0)) {
+		if ((!fadingIn) && (!fadingOut) && (Input.GetMouseButtonDown (0))) {
 			RemoveText ();
 			bubbleIndex++;
 		}
@@ -44,8 +49,8 @@ public class Dialogue : MonoBehaviour {
 		}
 	}
 
-	void DisplayText(int index) {
-		activeBubble = Instantiate(bubble, new Vector3(70, -60, 0), Quaternion.identity);
+	void DisplayText(int index, Vector3 offset) {
+		activeBubble = Instantiate(bubble, offset, Quaternion.identity);
 		activeBubble.gameObject.GetComponentInChildren<Image> ().material.color = white;
 
 		Text bubbleText = activeBubble.GetComponentInChildren<Text>();
@@ -73,7 +78,7 @@ public class Dialogue : MonoBehaviour {
 		yield return new WaitForSeconds (0.7f);
 		activeBubble.gameObject.SetActive (false);
 		fadingOut = false;
-		DisplayText (bubbleIndex);
+		DisplayText (bubbleIndex, offset);
 
 	}
 }
