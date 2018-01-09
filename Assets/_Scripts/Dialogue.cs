@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class Dialogue : MonoBehaviour {
 	public Canvas canv;
 	public Transform bubble;   // the prefab
-	public Transform activeBubble;
-	public int bubbleIndex;
+
+	public bool sceneRunning;
+	private Transform activeBubble;
+	private int bubbleIndex;
 
 	[SerializeField] private float fadePerSecond = 2.5f;
 	private bool fadingIn, fadingOut;
@@ -20,33 +22,46 @@ public class Dialogue : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		sceneRunning = false;
 		fadingIn = fadingOut = false;
 		bubbleIndex = 0;
 	}
 
-	void StartScene () {
+	public void StartScene (int index=0) {
+		bubbleIndex = index;
+		sceneRunning = true;
 		DisplayText (bubbleIndex, offset);
+	}
+
+	public void EndScene() {
+		sceneRunning = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Check for input, advance text if left click
-		if ((!fadingIn) && (!fadingOut) && (Input.GetMouseButtonDown (0))) {
-			RemoveText ();
-			bubbleIndex++;
-		}
 
-		if (fadingIn) {
-			Material material = activeBubble.gameObject.GetComponentInChildren<Image> ().material;
-			Color color = material.color;
-			material.color = new Color(color.r, color.g, color.b, color.a + (fadePerSecond * Time.deltaTime));
-		}
+		if (sceneRunning) {
+			if ((!fadingIn) && (!fadingOut) && (Input.GetMouseButtonDown (0))) {
+				RemoveText ();
 
-		if (fadingOut) {
-			Material material = activeBubble.gameObject.GetComponentInChildren<Image> ().material;
-			Color color = material.color;
-			material.color = new Color(color.r, color.g, color.b, color.a - (fadePerSecond * Time.deltaTime));
+			}
+
+			if (fadingIn) {
+				// Add alpha
+				Material material = activeBubble.gameObject.GetComponentInChildren<Image> ().material;
+				Color color = material.color;
+				material.color = new Color(color.r, color.g, color.b, color.a + (fadePerSecond * Time.deltaTime));
+			}
+
+			if (fadingOut) {
+				// Subtract alpha
+				Material material = activeBubble.gameObject.GetComponentInChildren<Image> ().material;
+				Color color = material.color;
+				material.color = new Color(color.r, color.g, color.b, color.a - (fadePerSecond * Time.deltaTime));
+			}
 		}
+			
 	}
 
 	void DisplayText(int index, Vector3 offset) {
@@ -78,7 +93,13 @@ public class Dialogue : MonoBehaviour {
 		yield return new WaitForSeconds (0.7f);
 		activeBubble.gameObject.SetActive (false);
 		fadingOut = false;
-		DisplayText (bubbleIndex, offset);
+
+		bubbleIndex++;
+		if (bubbleIndex < lines.Length) {
+			DisplayText (bubbleIndex, offset);
+		} else {
+			EndScene ();
+		}
 
 	}
 }

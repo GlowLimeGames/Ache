@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EtrelleController : MonoBehaviour {
 
+	public Dialogue dialogueManager;
+
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -16,7 +18,11 @@ public class EtrelleController : MonoBehaviour {
 
 	void OnMouseDown() {
 		// Click on the NPC sprite to start dialogue
-		// TODO call StartScene from Dialogue.cs
+
+		if (!dialogueManager.sceneRunning) {
+			dialogueManager.StartScene ();
+		}
+
 		// Really should store Dialogue.cs in a DialogueController or something
 	}
 }
