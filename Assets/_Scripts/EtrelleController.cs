@@ -19,10 +19,17 @@ public class EtrelleController : MonoBehaviour {
 	void OnMouseDown() {
 		// Click on the NPC sprite to start dialogue
 
+		// Can use logic here to determine which statement to start with
+		// TODO Use tags and such rather than indices
 		if (!dialogueManager.sceneRunning) {
-			dialogueManager.StartScene (0, transform.position);
+			dialogueManager.StartScene (0);
 		}
 
-		// Really should store Dialogue.cs in a DialogueController or something
+		// Dialogue json should have properties:
+		// speaker
+		// line
+		// end scene afterwards?
+		// set flags?  (quest_given, etc)
+		// descriptive tag? (like, "estrelle_first", "estrelle_after_quest", etc)
 	}
 }
