@@ -82,6 +82,7 @@ public class Dialogue : MonoBehaviour {
 		fadingOut = true;
 
 		StartCoroutine("NextWindow");
+
 	}
 
 	IEnumerator StopFadeIn() {
