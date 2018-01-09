@@ -18,9 +18,9 @@ public class Dialogue : MonoBehaviour {
 	private Color white = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
-	Vector3 offset = new Vector3(-60, -38, 0);
+	Vector3 offset = new Vector3(-10, -38, 0);
 
-	string[] lines = new string[] { "First text", "Second text", "Third text", "Fourth text", };
+	string[] lines = new string[] { "First text", "Really really really really long text", "Third text", "Fourth text", };
 
 	private bool zoomingIn, zoomingOut;
 
@@ -36,19 +36,20 @@ public class Dialogue : MonoBehaviour {
 		bubbleIndex = 0;
 	}
 
-	public void StartScene (int index=0) {
+	public void StartScene (int index, Vector3 location) {
 		bubbleIndex = index;
 		sceneRunning = true;
+		// TODO apply offset to location
 		DisplayText (bubbleIndex, offset);
 
-		//cam.orthographicSize = sceneZoom;
 		ZoomIn();
 	}
 
 	public void EndScene() {
 		sceneRunning = false;
 
-		//cam.orthographicSize = defaultZoom;
+		// TODO Cleanup old windows, all have name SpeechBubble(Clone)
+
 		ZoomOut();
 	}
 

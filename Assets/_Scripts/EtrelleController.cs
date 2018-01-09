@@ -20,7 +20,7 @@ public class EtrelleController : MonoBehaviour {
 		// Click on the NPC sprite to start dialogue
 
 		if (!dialogueManager.sceneRunning) {
-			dialogueManager.StartScene ();
+			dialogueManager.StartScene (0, transform.position);
 		}
 
 		// Really should store Dialogue.cs in a DialogueController or something
