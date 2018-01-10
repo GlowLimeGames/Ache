@@ -3,6 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Line {
+	public string speaker;
+	public string text;
+	public string tag;
+}
+
+public static class JsonHelper
+{
+	public static T[] FromJson<T>(string json)
+	{
+		Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+		return wrapper.Items;
+	}
+
+	public static string ToJson<T>(T[] array)
+	{
+		Wrapper<T> wrapper = new Wrapper<T>();
+		wrapper.Items = array;
+		return JsonUtility.ToJson(wrapper);
+	}
+
+	public static string ToJson<T>(T[] array, bool prettyPrint)
+	{
+		Wrapper<T> wrapper = new Wrapper<T>();
+		wrapper.Items = array;
+		return JsonUtility.ToJson(wrapper, prettyPrint);
+	}
+
+	[System.Serializable]
+	private class Wrapper<T>
+	{
+		public T[] Items;
+	}
+}
+
 public class Dialogue : MonoBehaviour {
 	public Canvas canv;
 	private Camera cam;
@@ -18,11 +54,13 @@ public class Dialogue : MonoBehaviour {
 	private Color white = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
+	// Offset of speech bubble from speaker position
 	Vector3 offset = new Vector3(0, 80, 0);
 
-	// TODO: These'll be in a JSON later
-	string[] lines = new string[] { "First text", "Really really really really long text", "Third text", "Fourth text", };
-	string[] speakers = new string[] {"Etrelle", "Bonefish", "Etrelle", "Bonefish"};
+	static string scriptPath = "Assets/_Dialogue/Dialogue.json";
+	string scriptJson = System.IO.File.ReadAllText (scriptPath);
+	Line[] gameScript;
+
 
 	private bool zoomingIn, zoomingOut;
 
@@ -31,6 +69,9 @@ public class Dialogue : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		scriptJson = "{\"Items\":" + scriptJson + "}";
+		gameScript = JsonHelper.FromJson<Line>(scriptJson);
+
 		cam = Camera.main;
 		sceneRunning = false;
 		fadingIn = fadingOut = false;
@@ -104,12 +145,10 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	void DisplayText(int index) {
-		GameObject speaker = GameObject.Find (speakers [bubbleIndex]);
+		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
 
 		// Convert from world position to canvas position.
-		// TODO: This isn't working quite as well as it needs to...
-		// It's too far away as you approach the screen's edges.
 		RectTransform CanvasRect = activeBubble.GetComponent<RectTransform>();
 		Vector3 pos = speaker.transform.position;
 		Vector2 viewportPoint = Camera.main.WorldToViewportPoint (pos);
@@ -119,7 +158,7 @@ public class Dialogue : MonoBehaviour {
 		activeBubble.gameObject.GetComponentInChildren<Image> ().material.color = white;
 
 		Text bubbleText = activeBubble.GetComponentInChildren<Text>();
-		bubbleText.text = lines [index];
+		bubbleText.text = gameScript[index].text;
 		activeBubble.SetParent (canv.transform, false);
 		activeBubble.gameObject.SetActive (true);
 
@@ -149,7 +188,7 @@ public class Dialogue : MonoBehaviour {
 
 		fadingOut = false;
 
-		if (bubbleIndex < lines.Length) {
+		if (bubbleIndex < gameScript.Length) {
 			//Vector3 nextLocation = _SpeakerPosition ();
 			DisplayText (bubbleIndex);
 		} else {
@@ -160,7 +199,7 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	private Vector3 _SpeakerPosition() {
-		string nextSpeakerName = speakers [bubbleIndex];
+		string nextSpeakerName = gameScript[bubbleIndex].speaker;
 		//print (nextSpeakerName);
 		// TODO Get them by tag instead?
 		Vector3 nextLocation = GameObject.Find (nextSpeakerName).transform.position;
