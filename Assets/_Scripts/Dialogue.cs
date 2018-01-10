@@ -8,6 +8,7 @@ public class Line {
 	public string speaker;
 	public string text;
 	public string tag;
+	public bool end;
 }
 
 public static class JsonHelper
@@ -57,7 +58,7 @@ public class Dialogue : MonoBehaviour {
 	// Offset of speech bubble from speaker position
 	Vector3 offset = new Vector3(0, 80, 0);
 
-	static string scriptPath = "Assets/_Dialogue/Dialogue.json";
+	static string scriptPath = "Assets/_Dialogue/Dialogue.txt";
 	string scriptJson = System.IO.File.ReadAllText (scriptPath);
 	Line[] gameScript;
 
@@ -145,6 +146,7 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	void DisplayText(int index) {
+		print ("DisplayText called");
 		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
 
@@ -180,6 +182,7 @@ public class Dialogue : MonoBehaviour {
 		
 	IEnumerator NextWindow() {
 		// Display the next window, if there is one to display
+		//print("NextWindow got called");
 		yield return new WaitForSeconds (0.4f);
 
 		if (bubbleIndex > 0) {
@@ -188,12 +191,20 @@ public class Dialogue : MonoBehaviour {
 
 		fadingOut = false;
 
-		if (bubbleIndex < gameScript.Length) {
-			//Vector3 nextLocation = _SpeakerPosition ();
-			DisplayText (bubbleIndex);
-		} else {
+		print (gameScript [bubbleIndex].text + gameScript[bubbleIndex].end);
+
+		// TODO: This is one too ealry
+		if (gameScript [bubbleIndex].end) {
 			EndScene ();
+		} else {
+			DisplayText(bubbleIndex);
 		}
+
+		//if (bubbleIndex < gameScript.Length) {
+		//	DisplayText (bubbleIndex);
+		//} else {
+		//	EndScene ();
+		//}
 			
 		bubbleIndex++;
 	}
