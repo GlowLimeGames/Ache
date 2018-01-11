@@ -97,8 +97,6 @@ public class Dialogue : MonoBehaviour {
 	public void EndScene() {
 		sceneRunning = false;
 
-		// TODO Cleanup old windows, all should have name SpeechBubble(Clone)
-
 		ZoomOut();
 	}
 
@@ -190,7 +188,8 @@ public class Dialogue : MonoBehaviour {
 		yield return new WaitForSeconds (0.4f);
 
 		if (bubbleIndex > 0) {
-			activeBubble.gameObject.SetActive (false);
+			//activeBubble.gameObject.SetActive (false);
+			Destroy(activeBubble.gameObject);
 		}
 
 		fadingOut = false;
