@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour {
 
-	//public Animator anim;
+	public Animator anim;
 
 	public GameObject player;
 
@@ -20,29 +20,25 @@ public class MonsterController : MonoBehaviour {
 		SEEK,
 		ATTACK,
 		DELAY,
-		WOUNDED
+		WOUNDED,
+		ROAR
 	}
 
 	public Action action;
+	public bool rage;
 
 	// Use this for initialization
 	void Start () {
+		anim = GetComponent<Animator> ();
 		facingLeft = true;
 		HP = 6;
-		action = Action.SEEK;
+		//action = Action.SEEK;
+		action = Action.ROAR;
+		StartCoroutine ("StartSeek");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		deltaX = (player.transform.position.x - transform.position.x);
-
-		if (Mathf.Abs (deltaX) < 0.5f) {
-			if (action != Action.DELAY) {
-				action = Action.ATTACK;
-			}
-		}
-
 		if (action == Action.SEEK) {
 			if (_playerToLeft ()) {
 				if (!facingLeft) {
@@ -58,9 +54,32 @@ public class MonsterController : MonoBehaviour {
 				transform.Translate (Time.deltaTime * maxSpeed, 0, 0);
 			}
 		} else if (action == Action.ATTACK) {
-			GetComponent<Animator> ().Play ("Attack");
+			if (rage) {
+				anim.Play ("AttackTwice");
+			} else {
+				anim.Play ("AttackOnce");
+			}
 			action = Action.DELAY;
 			StartCoroutine (StopStun ());
+		}
+	}
+
+	void LateUpdate() {
+		deltaX = (player.transform.position.x - transform.position.x);
+
+		if (Mathf.Abs (deltaX) < 0.5f) {
+			if (action != Action.DELAY) {
+				action = Action.ATTACK;
+			}
+		}
+
+		if (HP <= 3) {
+			rage = true;
+		}
+
+		if (HP <= 0) {
+			anim.Play ("Die");
+			StartCoroutine (DestroyAfterDeath ());
 		}
 	}
 
@@ -79,5 +98,15 @@ public class MonsterController : MonoBehaviour {
 	IEnumerator StopStun() {
 		yield return new WaitForSeconds (3.0f);
 		action = Action.SEEK;
+	}
+
+	IEnumerator StartSeek() {
+		yield return new WaitForSeconds (2.0f);
+		action = Action.SEEK;
+	}
+
+	IEnumerator DestroyAfterDeath() {
+		yield return new WaitForSeconds (1.0f);
+		Destroy (gameObject);
 	}
 }
