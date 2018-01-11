@@ -57,7 +57,7 @@ public class Dialogue : MonoBehaviour {
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
 	// Offset of speech bubble from speaker position
-	Vector3 offset = new Vector3(0, 80, 1);
+	Vector3 offset = new Vector3(0, 250, 1);
 
 	static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
 	string scriptJson = System.IO.File.ReadAllText (scriptPath);
