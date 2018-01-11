@@ -43,7 +43,8 @@ public static class JsonHelper
 public class Dialogue : MonoBehaviour {
 	public Canvas canv;
 	private Camera cam;
-	public Transform bubble;   // the prefab
+	public Transform bubbleLeft;   // the prefabs
+	public Transform bubbleRight;
 
 	public bool sceneRunning;
 	private Transform activeBubble;
@@ -58,7 +59,7 @@ public class Dialogue : MonoBehaviour {
 	// Offset of speech bubble from speaker position
 	Vector3 offset = new Vector3(0, 80, 1);
 
-	static string scriptPath = "Assets/_Dialogue/Dialogue.txt";
+	static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
 	string scriptJson = System.IO.File.ReadAllText (scriptPath);
 	Line[] gameScript;
 
@@ -150,8 +151,8 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	void DisplayText(int index) {
-		print ("DisplayText called");
 		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
+		Transform bubble = SelectBubble (speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
 
 		// Convert from world position to canvas position.
@@ -222,6 +223,14 @@ public class Dialogue : MonoBehaviour {
 			}
 		}
 		return -1;
+	}
+
+	private Transform SelectBubble(GameObject speaker) {
+		if (speaker.transform.position.x <= 0.0) {
+			return bubbleRight;
+		} else {
+			return bubbleLeft;
+		}
 	}
 		
 }

@@ -14,28 +14,35 @@ public class EtrelleController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		// Do various animations and such
 	}
 
 	void OnMouseDown() {
 		// Click on the NPC sprite to start dialogue
 
 		// Can use logic here to determine which statement to start with
-		// TODO Use tags and such rather than indices
+
 		if (!dialogueManager.sceneRunning) {
-			if (!gameManager.etrelleTalked) {
-				dialogueManager.StartScene ("etrelle_first");
-				gameManager.etrelleTalked = true;
-			} else {
-				dialogueManager.StartScene ("etrelle_second");
+			// TODO: This assumes you have separate Etrelle objects on Forest/House
+			// scenes. Should I just get the scene name instead here?
+			string sceneTag = "etrelle_" + gameManager.etrelleForest.ToString ();
+			dialogueManager.StartScene (sceneTag);
+
+			if (gameManager.etrelleForest < 6) {
+				
+				gameManager.etrelleForest++;
 			}
+
+			// TODO: etrelleHouse should be modulo however many there are, for looping
 		}
 
-		// Dialogue json should have properties:
-		// speaker
-		// line
-		// end scene afterwards?
-		// set flags?  (quest_given, etc)
-		// descriptive tag? (like, "estrelle_first", "estrelle_after_quest", etc)
+		//if (!dialogueManager.sceneRunning) {
+		//	if (!gameManager.etrelleTalked) {
+		//		dialogueManager.StartScene ("etrelle_first");
+		//		gameManager.etrelleTalked = true;
+		//	} else {
+		//		dialogueManager.StartScene ("etrelle_second");
+		//	}
+		//}
 	}
 }
