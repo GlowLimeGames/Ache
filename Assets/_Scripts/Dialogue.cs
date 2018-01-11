@@ -56,7 +56,7 @@ public class Dialogue : MonoBehaviour {
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
 	// Offset of speech bubble from speaker position
-	Vector3 offset = new Vector3(0, 80, 0);
+	Vector3 offset = new Vector3(0, 80, 1);
 
 	static string scriptPath = "Assets/_Dialogue/Dialogue.txt";
 	string scriptJson = System.IO.File.ReadAllText (scriptPath);
@@ -80,11 +80,15 @@ public class Dialogue : MonoBehaviour {
 		bubbleIndex = 0;
 	}
 
-	public void StartScene (int index) {
-		bubbleIndex = index;
+	public void StartScene (string sceneTag) {
+		
+		//bubbleIndex = index;
+		bubbleIndex = GetSceneStartIndex(sceneTag);
+		print ("bubbleIndex is" + bubbleIndex);
+
 		sceneRunning = true;
 
-		StartCoroutine("NextWindow");
+		StartCoroutine("NextWindow", true);
 
 		ZoomIn();
 	}
@@ -104,7 +108,7 @@ public class Dialogue : MonoBehaviour {
 	public void ZoomOut() {
 		zoomingOut = true;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -171,7 +175,7 @@ public class Dialogue : MonoBehaviour {
 
 	void RemoveText() {
 		fadingOut = true;
-		StartCoroutine("NextWindow");
+		StartCoroutine("NextWindow", false);
 
 	}
 
@@ -180,9 +184,8 @@ public class Dialogue : MonoBehaviour {
 		fadingIn = false;
 	}
 		
-	IEnumerator NextWindow() {
+	IEnumerator NextWindow(bool first) {
 		// Display the next window, if there is one to display
-		//print("NextWindow got called");
 		yield return new WaitForSeconds (0.4f);
 
 		if (bubbleIndex > 0) {
@@ -191,31 +194,34 @@ public class Dialogue : MonoBehaviour {
 
 		fadingOut = false;
 
-		print (gameScript [bubbleIndex].text + gameScript[bubbleIndex].end);
-
-		// TODO: This is one too ealry
-		if (gameScript [bubbleIndex].end) {
-			EndScene ();
+		// Don't check the previous statement's end value if it's a first statement
+		if (!first) {
+			if (gameScript [bubbleIndex - 1].end) {
+				EndScene ();
+			} else {
+				DisplayText (bubbleIndex);
+			}
 		} else {
-			DisplayText(bubbleIndex);
+			DisplayText (bubbleIndex);
 		}
-
-		//if (bubbleIndex < gameScript.Length) {
-		//	DisplayText (bubbleIndex);
-		//} else {
-		//	EndScene ();
-		//}
 			
 		bubbleIndex++;
 	}
 
 	private Vector3 _SpeakerPosition() {
 		string nextSpeakerName = gameScript[bubbleIndex].speaker;
-		//print (nextSpeakerName);
 		// TODO Get them by tag instead?
 		Vector3 nextLocation = GameObject.Find (nextSpeakerName).transform.position;
-		//print (nextLocation);
 		return nextLocation;
+	}
+
+	private int GetSceneStartIndex(string sceneTag) {
+		for (int i=0; i<gameScript.Length; i++) {
+			if (gameScript[i].tag == sceneTag) {
+				return i;
+			}
+		}
+		return -1;
 	}
 		
 }

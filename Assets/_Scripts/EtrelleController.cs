@@ -5,6 +5,7 @@ using UnityEngine;
 public class EtrelleController : MonoBehaviour {
 
 	public Dialogue dialogueManager;
+	public GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,12 @@ public class EtrelleController : MonoBehaviour {
 		// Can use logic here to determine which statement to start with
 		// TODO Use tags and such rather than indices
 		if (!dialogueManager.sceneRunning) {
-			dialogueManager.StartScene (0);
+			if (!gameManager.etrelleTalked) {
+				dialogueManager.StartScene ("etrelle_first");
+				gameManager.etrelleTalked = true;
+			} else {
+				dialogueManager.StartScene ("etrelle_second");
+			}
 		}
 
 		// Dialogue json should have properties:
