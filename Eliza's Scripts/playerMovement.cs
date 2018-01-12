@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class playerMovement : MonoBehaviour {
-
+	
+	float horizontal;
 	Rigidbody2D rb; 
 	public float playerMovementSpeed; 
 	bool facingRight; 
 	Vector3 playerScale; 
 	Animator anim; 
 	public Transform[] groundPoints; 
-	public float groundRadius, jumpForce;  
-	LayerMask isGround;
+	float groundRadius, jumpForce;  
+	public LayerMask isGround;
 	bool isGrounded, jumped;
-	float horizontal;
+	//public Transform groundCheck; 
 
 	// Use this for initialization
 	void Start () {
-
-		jumpForce = 2;
-		isGrounded = IsGrounded (); 
-		groundRadius = .1f;
-		facingRight = true; 
 		rb = GetComponent <Rigidbody2D> (); 
+		jumpForce = 250;
+		groundRadius = .1f;
+		facingRight = true;  
 		playerMovementSpeed = 3; 
 		anim = GetComponent < Animator> (); 
 
@@ -33,8 +32,9 @@ public class playerMovement : MonoBehaviour {
 
 		horizontal = Input.GetAxis ("Horizontal"); 
 		movePlayer (horizontal); 
-		flipPlayer (horizontal); 
-
+		flipPlayer (horizontal);
+		isGrounded = IsGrounded (); 
+	
 	}
 
 	void movePlayer(float horizontal) { 
@@ -46,13 +46,14 @@ public class playerMovement : MonoBehaviour {
 
 		//player jump
 		if (Input.GetKeyDown (KeyCode.W)) { 
-
+			Debug.Log ("W was pressed");
+			
 			jumped = true; 
 
 			if (isGrounded && jumped) { 
 
+				rb.AddForce (new Vector2 (0, jumpForce));
 				isGrounded = false; 
-				rb.AddForce (new Vector2 (0, jumpForce)); 
 
 			}
 		}
@@ -75,19 +76,18 @@ public class playerMovement : MonoBehaviour {
 	bool IsGrounded() { 
 		
 		if (rb.velocity.y <= 0) { 
-			// for ever ground point a new collider is made. 
-			foreach (Transform point in groundPoints) { 
+			// for every ground point a new collider is made. 
+			foreach (Transform point in groundPoints) {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (point.position, groundRadius, isGround);
-
 				for (int i = 0; i < colliders.Length; i++) { 
-					// returns true if the collider is touching something other then the player. 
+					//returns true if the collider is touching something other then the player. 
 					if (colliders [i].gameObject != gameObject) { 
 						return true;
 					} 
-				}
+				} 
 			}
+			//returns false if the velocity of the player is greater then 0 . 
 		}
-		//returns false if the velocity of the player is greater then 0 . 
-		return false; 
+		return false;
 	}
 }
