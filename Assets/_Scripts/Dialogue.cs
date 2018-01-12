@@ -57,7 +57,8 @@ public class Dialogue : MonoBehaviour {
 	private Color transparent = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 
 	// Offset of speech bubble from speaker position
-	Vector3 offset = new Vector3(0, 250, 1);
+	//Vector3 offset = new Vector3(0, 250, 1);
+	Vector3 offset;
 
 	static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
 	string scriptJson = System.IO.File.ReadAllText (scriptPath);
@@ -149,6 +150,10 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	void DisplayText(int index) {
+		int textLines = gameScript [bubbleIndex].text.Split ('\n').Length;
+
+		Vector3 offset = new Vector3(0, 175 + (50*textLines), 0);
+
 		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
 		Transform bubble = SelectBubble (speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
@@ -187,7 +192,7 @@ public class Dialogue : MonoBehaviour {
 		// Display the next window, if there is one to display
 		yield return new WaitForSeconds (0.4f);
 
-		if (bubbleIndex > 0) {
+		if (!first) {
 			//activeBubble.gameObject.SetActive (false);
 			Destroy(activeBubble.gameObject);
 		}
