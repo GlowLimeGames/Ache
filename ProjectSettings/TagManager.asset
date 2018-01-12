@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - bubble
+  - BirdSeed
+  - Ground
+  - Boulder
+  - Sunflower
+  - Tree
+  - MetalShard
   layers:
   - Default
   - TransparentFX
