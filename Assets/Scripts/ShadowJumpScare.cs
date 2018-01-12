@@ -34,8 +34,11 @@ public class ShadowJumpScare : MonoBehaviour {
 		StartCoroutine (ShadowJumpScare_CR ());
 	}
 
+
 	IEnumerator ShadowJumpScare_CR(){
-		shadow.SetActive(true);
+		//shadow.SetActive(true);
+
+        yield return null;
 	}
 
 	double GetRandomNumber(double minimum, double maximum)
