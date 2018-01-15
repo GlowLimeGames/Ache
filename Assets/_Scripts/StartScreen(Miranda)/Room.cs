@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Click : MonoBehaviour {
+public class Room : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,10 +13,4 @@ public class Click : MonoBehaviour {
 	void Update () {
 		
 	}
-
-	public void Click (){
-
-
-	}
-
 }
