@@ -72,6 +72,9 @@ public class TutorialController : MonoBehaviour {
 			}
 
 			// Collecting the backpack is next
+			if ((bubbleIndex == 4) && (Input.GetMouseButtonDown (0))) {
+				RemoveText ();
+			}
 
 			if (dialogueManager.sceneRunning) {
 				activeBubble.gameObject.SetActive (false);
