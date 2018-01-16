@@ -55,6 +55,8 @@ public class playerMovement : MonoBehaviour {
 				rb.AddForce (new Vector2 (0, jumpForce));
 				isGrounded = false; 
 
+			} else {
+				print ("Couldn't jump");
 			}
 		}
 
@@ -78,6 +80,7 @@ public class playerMovement : MonoBehaviour {
 		if (rb.velocity.y <= 0) { 
 			// for every ground point a new collider is made. 
 			foreach (Transform point in groundPoints) {
+				print (point);
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (point.position, groundRadius, isGround);
 				for (int i = 0; i < colliders.Length; i++) { 
 					//returns true if the collider is touching something other then the player. 

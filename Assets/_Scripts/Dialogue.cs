@@ -46,6 +46,8 @@ public class Dialogue : MonoBehaviour {
 	public Transform bubbleLeft;   // the prefabs
 	public Transform bubbleRight;
 
+	public TextAsset script;
+
 	public bool sceneRunning;
 	private Transform activeBubble;
 	private int bubbleIndex;
@@ -60,10 +62,9 @@ public class Dialogue : MonoBehaviour {
 	//Vector3 offset = new Vector3(0, 250, 1);
 	Vector3 offset;
 
-	static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
-	string scriptJson = System.IO.File.ReadAllText (scriptPath);
+	//static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
+	string scriptJson;
 	Line[] gameScript;
-
 
 	private bool zoomingIn, zoomingOut;
 
@@ -72,6 +73,8 @@ public class Dialogue : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		//scriptJson = System.IO.File.ReadAllText (scriptPath);
+		scriptJson = script.text;
 		scriptJson = "{\"Items\":" + scriptJson + "}";
 		gameScript = JsonHelper.FromJson<Line>(scriptJson);
 
