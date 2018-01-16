@@ -8,6 +8,8 @@ public class TutorialController : MonoBehaviour {
 	public Canvas canv;
 	public Transform speakerlessText;
 
+	public Dialogue dialogueManager;
+
 	public TextAsset script;
 
 	public bool sceneRunning;
@@ -70,6 +72,14 @@ public class TutorialController : MonoBehaviour {
 			}
 
 			// Collecting the backpack is next
+
+			if (dialogueManager.sceneRunning) {
+				activeBubble.gameObject.SetActive (false);
+			} else {
+				if (activeBubble != null) {
+					activeBubble.gameObject.SetActive (true);
+				}
+			}
 		}
 
 	}

@@ -24,6 +24,8 @@ public class GuardianController : MonoBehaviour {
 
 		// Can use logic here to determine which statement to start with
 
+		print ("It was clicked");
+
 		if (!dialogueManager.sceneRunning) {
 			
 			if (gameManager.guardianTalked) {

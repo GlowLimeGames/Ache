@@ -86,6 +86,8 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	public void StartScene (string sceneTag) {
+
+
 		
 		bubbleIndex = GetSceneStartIndex(sceneTag);
 		print ("bubbleIndex is" + bubbleIndex);
@@ -233,7 +235,7 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	private Transform SelectBubble(GameObject speaker) {
-		if (speaker.transform.position.x <= 0.0) {
+		if (speaker.transform.position.x <= cam.transform.position.x) {
 			return bubbleRight;
 		} else {
 			return bubbleLeft;

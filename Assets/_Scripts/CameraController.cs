@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-	static float offsetX = 0.0f;
+	static float offsetX = -2.0f;
 
 	public GameObject player;
 
