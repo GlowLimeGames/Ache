@@ -87,7 +87,6 @@ public class Dialogue : MonoBehaviour {
 
 	public void StartScene (string sceneTag) {
 		
-		//bubbleIndex = index;
 		bubbleIndex = GetSceneStartIndex(sceneTag);
 		print ("bubbleIndex is" + bubbleIndex);
 
@@ -157,7 +156,8 @@ public class Dialogue : MonoBehaviour {
 
 		Vector3 offset = new Vector3(0, 175 + (50*textLines), 0);
 
-		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
+		string speakerName = gameScript [bubbleIndex].speaker;
+		GameObject speaker = GameObject.Find (speakerName);
 		Transform bubble = SelectBubble (speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
 

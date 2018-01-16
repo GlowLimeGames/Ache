@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	// Dialogue indices
 	public int etrelleForest = 0;
 	public int etrelleHouse = 0;
+	public bool guardianTalked = false;
 
 	// Use this for initialization
 	void Start () {
