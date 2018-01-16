@@ -9,18 +9,12 @@ public class StartScreen : MonoBehaviour {
 
 	public void Start(){
 	
+
+	//Which scene starts the game?
 	Debug.Log("StartGame");
 	
 	}
-
-	public void Credits(){
-
-	Debug.Log ("Credits");
-
-
-
-
-	}
+		
 		
 	public void Exit(){
 	
