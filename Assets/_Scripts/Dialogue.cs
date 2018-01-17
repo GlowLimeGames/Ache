@@ -46,6 +46,8 @@ public class Dialogue : MonoBehaviour {
 	public Transform bubbleLeft;   // the prefabs
 	public Transform bubbleRight;
 
+	public TextAsset script;
+
 	public bool sceneRunning;
 	private Transform activeBubble;
 	private int bubbleIndex;
@@ -60,10 +62,9 @@ public class Dialogue : MonoBehaviour {
 	//Vector3 offset = new Vector3(0, 250, 1);
 	Vector3 offset;
 
-	static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
-	string scriptJson = System.IO.File.ReadAllText (scriptPath);
+	//static string scriptPath = "Assets/_Dialogue/Level 1 Dialogue.txt";
+	string scriptJson;
 	Line[] gameScript;
-
 
 	private bool zoomingIn, zoomingOut;
 
@@ -72,6 +73,8 @@ public class Dialogue : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		//scriptJson = System.IO.File.ReadAllText (scriptPath);
+		scriptJson = script.text;
 		scriptJson = "{\"Items\":" + scriptJson + "}";
 		gameScript = JsonHelper.FromJson<Line>(scriptJson);
 
@@ -83,8 +86,9 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	public void StartScene (string sceneTag) {
+
+
 		
-		//bubbleIndex = index;
 		bubbleIndex = GetSceneStartIndex(sceneTag);
 		print ("bubbleIndex is" + bubbleIndex);
 
@@ -154,7 +158,8 @@ public class Dialogue : MonoBehaviour {
 
 		Vector3 offset = new Vector3(0, 175 + (50*textLines), 0);
 
-		GameObject speaker = GameObject.Find (gameScript[bubbleIndex].speaker);
+		string speakerName = gameScript [bubbleIndex].speaker;
+		GameObject speaker = GameObject.Find (speakerName);
 		Transform bubble = SelectBubble (speaker);
 		activeBubble = Instantiate(bubble, speaker.transform.position + offset, Quaternion.identity);
 
@@ -230,7 +235,7 @@ public class Dialogue : MonoBehaviour {
 	}
 
 	private Transform SelectBubble(GameObject speaker) {
-		if (speaker.transform.position.x <= 0.0) {
+		if (speaker.transform.position.x <= cam.transform.position.x) {
 			return bubbleRight;
 		} else {
 			return bubbleLeft;

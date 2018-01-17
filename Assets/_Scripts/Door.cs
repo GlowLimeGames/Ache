@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
-
-	// Dialogue indices
-	public int etrelleForest = 0;
-	public int etrelleHouse = 0;
-	public bool guardianTalked = false;
+public class Door : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void OnMouseDown() {
+		SceneManager.LoadScene ("Forest");
 	}
 }

@@ -55,6 +55,8 @@ public class playerMovement : MonoBehaviour {
 				rb.AddForce (new Vector2 (0, jumpForce));
 				isGrounded = false; 
 
+			} else {
+				print ("Couldn't jump" + isGrounded + jumped);
 			}
 		}
 
@@ -74,8 +76,10 @@ public class playerMovement : MonoBehaviour {
 	} 
 
 	bool IsGrounded() { 
-		
-		if (rb.velocity.y <= 0) { 
+
+		// After landing, the Y velocity fluctuates between a bunch of really low numbers for ~1s.
+		// Safer to check if it's lower than 0.1 than 0.0
+		if (rb.velocity.y <= 0.1) { 
 			// for every ground point a new collider is made. 
 			foreach (Transform point in groundPoints) {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (point.position, groundRadius, isGround);
@@ -88,6 +92,7 @@ public class playerMovement : MonoBehaviour {
 			}
 			//returns false if the velocity of the player is greater then 0 . 
 		}
+		print ("Y velocity > 0");
 		return false;
 	}
 }
