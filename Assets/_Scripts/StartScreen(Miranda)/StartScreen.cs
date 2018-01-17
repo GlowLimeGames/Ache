@@ -12,7 +12,7 @@ public class StartScreen : MonoBehaviour {
 
 	//Which scene starts the game?
 		Debug.Log("StartGame");
-		//SceneManager.LoadScene ("Preface");
+		SceneManager.LoadScene ("Preface");
 	}
 		
 		
