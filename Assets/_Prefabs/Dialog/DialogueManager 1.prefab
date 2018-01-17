@@ -56,5 +56,5 @@ MonoBehaviour:
     type: 2}
   bubbleRight: {fileID: 224277033679842040, guid: 471d8664bef9a41d48e1beda3c1b2ccd,
     type: 2}
-  scriptPath: /Assets/_Dialogue/Level 1 Dialogue.txt
+  script: {fileID: 0}
   sceneRunning: 0
