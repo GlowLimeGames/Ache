@@ -94,4 +94,19 @@ public class playerMovement : MonoBehaviour {
 		print ("Y velocity > 0");
 		return false;
 	}
+
+    public void Equip(bool activate, Item item)
+    {
+
+    }
+
+    public void Hold(Item item)
+    {
+
+    }
+
+    public void Use(Item item)
+    {
+
+    }
 }

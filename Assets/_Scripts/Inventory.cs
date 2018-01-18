@@ -14,13 +14,15 @@ public class Item
     public Sprite image;
     public string type;
     public int damage;
+    public GameObject obj;
 
-    public Item(Sprite image, string type, int iD, int damage)
+    public Item(Sprite image, string type, int iD, int damage, GameObject obj)
     {
         this.image = image;
         this.type = type;
         this.iD = iD;
         this.damage = damage;
+        this.obj = obj;
     }
 }
 
@@ -29,26 +31,73 @@ public class Inventory : MonoBehaviour {
     public List<Item> ItemData = new List<Item>();
 
     public List<GameObject> InventorySlots;
-    List<Item> CurrentItems = new List<Item>();
+    public List<Item> CurrentItems = new List<Item>();
     public int maxItems = 5;
+
+    public bool IsFull
+    {
+        get
+        {
+            if (CurrentItems.Count == maxItems)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
     public Item selected;
     public int selectedSlot;
 
     public Transform inventoryBar;
 
-    private void Start()
+    playerMovement Player;
+
+    public static Inventory Instance
     {
-        AddItem(ItemData[0]);
-        AddItem(ItemData[1]);
+        get
+        {
+            return instance;
+        }
+    }
+    private static Inventory instance = null;
+
+    void Awake()
+    {
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void AddItem(Item item)
+    void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<playerMovement>();
+    }
+
+    public void AddItem(int itemID)
     {
         if (CurrentItems.Count > maxItems)
         {
             return;
         }
+
+        Item item = ItemData[0];
+        foreach(Item eachItem in ItemData)
+        {
+            if (eachItem.iD == itemID)
+            {
+                item = eachItem;
+                break;
+            }
+        }
+
         GameObject currentSlot = InventorySlots[CurrentItems.Count];
 
         currentSlot.transform.GetChild(0).GetComponent<Image>().sprite = item.image;
@@ -105,22 +154,22 @@ public class Inventory : MonoBehaviour {
 
             if (item.type == "Usable")
             {
-                //Player.Use(item);
+                Player.Use(item);
             }
             else if (item.type == "Holdable")
             {
-                //Player.Hold(item);
+                Player.Hold(item);
             }
             else if (item.type == "Weapon")
             {
-                //Player.Equip(item);
+                Player.Equip(true, item);
             }
         }
     }
 
     void UnSelect(Item item)
     {
-        //Player.Unequip ();
+        Player.Equip (false, item);
 
         SetHighlight(InventorySlots[selectedSlot], false);
     }
