@@ -74,7 +74,10 @@ public class playerMovement : MonoBehaviour {
 	} 
 
 	bool IsGrounded() { 
-		
+
+
+		// After landing, the Y velocity fluctuates between a bunch of really low numbers for ~1s.
+		// Safer to check if it's lower than 0.1 than 0.0
 		if (rb.velocity.y <= 0.1) { 
 			// for every ground point a new collider is made. 
 			foreach (Transform point in groundPoints) {
@@ -88,6 +91,7 @@ public class playerMovement : MonoBehaviour {
 			}
 			//returns false if the velocity of the player is greater then 0 . 
 		}
+		print ("Y velocity > 0");
 		return false;
 	}
 }

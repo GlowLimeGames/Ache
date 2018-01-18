@@ -1,0 +1,1 @@
+﻿[{"speaker":"Guardian","text":"Hello, Emma.","tag":"preface","end":false},{"speaker":"Guardian","text":"Don't be afraid.","tag":"","end":false},{"speaker":"Emma","text":"Where am I?","tag":"","end":false}]
