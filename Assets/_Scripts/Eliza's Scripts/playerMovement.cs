@@ -75,7 +75,7 @@ public class playerMovement : MonoBehaviour {
 
 	bool IsGrounded() { 
 		
-		if (rb.velocity.y <= 0) { 
+		if (rb.velocity.y <= 0.1) { 
 			// for every ground point a new collider is made. 
 			foreach (Transform point in groundPoints) {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (point.position, groundRadius, isGround);

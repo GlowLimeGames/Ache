@@ -8,16 +8,6 @@ public class TreeBehavior : MonoBehaviour {
 	public Sprite crushedTree;
 	public Sprite stick;
 
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	void OnCollisionEnter(Collision coll){
 		if (coll.gameObject.tag == "Tree") {
 			//Switch to crushed tree sprite and add stick if

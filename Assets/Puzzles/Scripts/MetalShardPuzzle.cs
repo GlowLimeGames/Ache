@@ -8,15 +8,6 @@ public class MetalShardPuzzle : MonoBehaviour {
 	public GameObject birdSeed;
 	public GameObject metalShard;
 
-	// Use this for initialization
-	void Start () {
-	}
-
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	void OnCollisionEnter(Collision coll){
 		if (coll.gameObject.tag == "BirdSeed") {
 			//Not sure if the following line is necessary
@@ -36,6 +27,10 @@ public class MetalShardPuzzle : MonoBehaviour {
 
 	//Crow drops the shard to eat the birdseed (animation called?) 
 	private void DropShard(){
+		//Add metal shard to inventory
 		print ("metal shard attained");
+		//Item(Sprite image, string type, int iD, int damage)
+		//Item metalShardItem = new Item (metalShard.GetComponent(SpriteRenderer), "Metal Shard", 1, 0);
+			//AddItem(metalShardItem);
 	}
 }
