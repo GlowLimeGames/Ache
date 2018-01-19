@@ -394,6 +394,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 212337858058876016, guid: d934ca396283b467fb09d91d42ce3194,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d934ca396283b467fb09d91d42ce3194, type: 2}
   m_IsPrefabParent: 0
@@ -445,7 +450,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -829868521
-  m_SortingLayer: -1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3406f29fd813c4e16b353633679cd3db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -698,7 +703,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b3fbf9c25068b455c8f6e1104b87135e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -789,11 +794,6 @@ Prefab:
     - target: {fileID: 1063602405067310, guid: 9164fda44350ad745982bbcdc16ed121, type: 2}
       propertyPath: m_Name
       value: Emma
-      objectReference: {fileID: 0}
-    - target: {fileID: 114886100266437942, guid: 9164fda44350ad745982bbcdc16ed121,
-        type: 2}
-      propertyPath: isGround.m_Bits
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9164fda44350ad745982bbcdc16ed121, type: 2}
