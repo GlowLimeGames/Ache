@@ -72,6 +72,25 @@ public class Dialogue : MonoBehaviour {
 	private float defaultZoom = 5.0f;
 	private float sceneZoom = 4.0f;
 
+	private static Dialogue instance = null;
+	public static Dialogue Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
+
+	void Awake()
+	{
+		if (instance)
+		{
+			DestroyImmediate(gameObject);
+			return;
+		}
+		instance = this;
+	}
+
 	// Need to reload the script at every scene load, so load these delegates here
 	void OnEnable()
 	{

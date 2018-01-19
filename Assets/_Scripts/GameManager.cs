@@ -15,12 +15,31 @@ public class GameManager : MonoBehaviour {
 	void OnEnable()
 	{
 		gameplayScene = false;
-		SceneManager.sceneLoaded += OnSceneLoaded;
+		SceneManager.sceneLoaded += SetGameplayScene;
 	}
 
 	void OnDisable()
 	{
-		SceneManager.sceneLoaded -= OnSceneLoaded;
+		SceneManager.sceneLoaded -= SetGameplayScene;
+	}
+
+	private static GameManager instance = null;
+	public static GameManager Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
+
+	void Awake()
+	{
+		if (instance)
+		{
+			DestroyImmediate(gameObject);
+			return;
+		}
+		instance = this;
 	}
 
 	// Use this for initialization
@@ -34,13 +53,13 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-	void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+	public void SetGameplayScene(Scene scene, LoadSceneMode mode) {
 		//// TODO: More than just the preface obviously
-		//if (scene.name == "Preface") {
-		//	gameplayScene = true;
-		//} else {
-		//	gameplayScene = false;
-		//}
+		if (scene.name == "Preface") {
+			gameplayScene = true;
+		} else {
+			gameplayScene = false;
+		}
 
 	}
 }

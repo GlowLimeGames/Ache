@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class GuardianController : MonoBehaviour {
 
-	private Dialogue dialogueManager;
-	private GameManager gameManager;
-
 	private string sceneTag;
 
 	// Use this for initialization
 	void Start () {
-		dialogueManager = Object.FindObjectOfType<Dialogue> ();
-		gameManager = Object.FindObjectOfType<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -27,16 +22,16 @@ public class GuardianController : MonoBehaviour {
 
 		print ("It was clicked");
 
-		if (!dialogueManager.sceneRunning) {
+		if (!Dialogue.Instance.sceneRunning) {
 			
-			if (gameManager.guardianTalked) {
+			if (GameManager.Instance.guardianTalked) {
 				sceneTag = "prefaceEnd";
 			} else {
 				sceneTag = "preface";
 			}
 
-			dialogueManager.StartScene (sceneTag);
-			gameManager.guardianTalked = true;
+			Dialogue.Instance.StartScene (sceneTag);
+			GameManager.Instance.guardianTalked = true;
 		}
 	}
 }

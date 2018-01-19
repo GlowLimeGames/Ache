@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class EtrelleController : MonoBehaviour {
 
-	private Dialogue dialogueManager;
-	private GameManager gameManager;
-
 	// Use this for initialization
 	void Start () {
-		dialogueManager = GameObject.FindObjectOfType<Dialogue> ();
-		gameManager = GameObject.FindObjectOfType<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -23,15 +18,15 @@ public class EtrelleController : MonoBehaviour {
 
 		// Can use logic here to determine which statement to start with
 
-		if (!dialogueManager.sceneRunning) {
+		if (!Dialogue.Instance.sceneRunning) {
 			// TODO: This assumes you have separate Etrelle objects on Forest/House
 			// scenes. Should I just get the scene name instead here?
-			string sceneTag = "etrelle_" + gameManager.etrelleForest.ToString ();
-			dialogueManager.StartScene (sceneTag);
+			string sceneTag = "etrelle_" + GameManager.Instance.etrelleForest.ToString ();
+			Dialogue.Instance.StartScene (sceneTag);
 
-			if (gameManager.etrelleForest < 6) {
+			if (GameManager.Instance.etrelleForest < 6) {
 				
-				gameManager.etrelleForest++;
+				GameManager.Instance.etrelleForest++;
 			}
 
 			// TODO: etrelleHouse should be modulo however many there are, for looping

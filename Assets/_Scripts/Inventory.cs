@@ -56,7 +56,6 @@ public class Inventory : MonoBehaviour {
     public Transform inventoryBar;
 
     playerMovement Player;
-	private GameManager gameManager;
 
     public static Inventory Instance
     {
@@ -81,7 +80,6 @@ public class Inventory : MonoBehaviour {
 	void OnEnable()
 	{
 		SceneManager.sceneLoaded += OnSceneLoaded;
-		gameManager = GameObject.FindObjectOfType<GameManager> ();
 	}
 
 	void OnDisable()
@@ -92,7 +90,7 @@ public class Inventory : MonoBehaviour {
     void Start()
     {
 		
-		if (gameManager.gameplayScene) {
+		if (GameManager.Instance.gameplayScene) {
 			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
 		} else {
 			Player = null;
@@ -194,8 +192,10 @@ public class Inventory : MonoBehaviour {
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		// Hide inventory if it's not in a gameplay scene
-		//if (gameManager.gameplayScene) {
-		if (scene.name == "Preface") {
+		// GameManager's OnSceneLoaded seems to trigger after this, so it's not useful
+		GameManager.Instance.SetGameplayScene(scene, mode);
+		if (GameManager.Instance.gameplayScene) {
+		//if (scene.name == "Preface") {
 			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
 			// Yes, that is the default scale of the inventory canvas
 			gameObject.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
