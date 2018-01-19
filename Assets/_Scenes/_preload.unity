@@ -347,7 +347,7 @@ Prefab:
     - target: {fileID: 224083785823821994, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 224811365530055662, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
@@ -367,7 +367,7 @@ Prefab:
     - target: {fileID: 224811365530055662, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 224420431628537200, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
@@ -387,7 +387,7 @@ Prefab:
     - target: {fileID: 224420431628537200, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 224628654599876088, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
@@ -407,7 +407,7 @@ Prefab:
     - target: {fileID: 224628654599876088, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 224361517387828002, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
@@ -427,7 +427,7 @@ Prefab:
     - target: {fileID: 224361517387828002, guid: 72cdae99e8c242845a4155730f4fb796,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72cdae99e8c242845a4155730f4fb796, type: 2}
@@ -448,6 +448,7 @@ GameObject:
   - component: {fileID: 1113217957}
   - component: {fileID: 1113217956}
   - component: {fileID: 1113217959}
+  - component: {fileID: 1113217960}
   m_Layer: 0
   m_Name: _app
   m_TagString: Untagged
@@ -513,6 +514,23 @@ MonoBehaviour:
   bubbleRight: {fileID: 224277033679842040, guid: 471d8664bef9a41d48e1beda3c1b2ccd,
     type: 2}
   sceneRunning: 0
+--- !u!114 &1113217960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1113217955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7ff2ae69e571644b422adbf9d9f9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicList: []
+  sfxList: []
+  Channels: []
+  GeneralSFX: []
+  currentlyPlaying: {fileID: 0}
+  musicSource: {fileID: 0}
 --- !u!1 &1339354639
 GameObject:
   m_ObjectHideFlags: 0

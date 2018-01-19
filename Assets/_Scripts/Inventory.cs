@@ -194,7 +194,6 @@ public class Inventory : MonoBehaviour {
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
 		// Hide inventory if it's not in a gameplay scene
-		print("Checking the gameplay scene now");
 		//if (gameManager.gameplayScene) {
 		if (scene.name == "Preface") {
 			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
