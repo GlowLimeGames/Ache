@@ -5,12 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - bubble
-  - BirdSeed
-  - Ground
-  - Boulder
   - Sunflower
-  - Tree
   - MetalShard
+  - BirdSeed
+  - Crow
   layers:
   - Default
   - TransparentFX
@@ -20,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - Environment
+  - 
   - 
   - 
   - 
@@ -45,12 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 3465098775
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Dialogue
-    uniqueID: 3977551457
+  - name: Player
+    uniqueID: 1907054849
     locked: 0
