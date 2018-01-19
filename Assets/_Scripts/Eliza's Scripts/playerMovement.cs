@@ -14,6 +14,8 @@ public class playerMovement : MonoBehaviour {
 	float groundRadius, jumpForce;  
 	public LayerMask isGround;
 	bool isGrounded, jumped;
+    bool crawling = false;
+    BoxCollider2D col2D;
 	//public Transform groundCheck; 
 
 	// Use this for initialization
@@ -22,7 +24,8 @@ public class playerMovement : MonoBehaviour {
 		jumpForce = 250;
 		groundRadius = .1f;
 		facingRight = true;  
-		playerMovementSpeed = 3; 
+		playerMovementSpeed = 3;
+        col2D = GetComponent<BoxCollider2D>();
 		anim = GetComponent < Animator> (); 
 
 	}
@@ -33,9 +36,21 @@ public class playerMovement : MonoBehaviour {
 		horizontal = Input.GetAxis ("Horizontal"); 
 		movePlayer (horizontal); 
 		flipPlayer (horizontal);
-		isGrounded = IsGrounded (); 
+		isGrounded = IsGrounded ();
+        CheckAttack();
 	
 	}
+
+    void CheckAttack()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (isGrounded)
+            {
+                anim.SetTrigger("Attack");
+            }
+        }
+    }
 
 	void movePlayer(float horizontal) { 
 
@@ -48,15 +63,37 @@ public class playerMovement : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.W)) { 
 			Debug.Log ("W was pressed");
 			
-			jumped = true; 
+			jumped = true;
 
 			if (isGrounded && jumped) { 
 
 				rb.AddForce (new Vector2 (0, jumpForce));
-				isGrounded = false; 
-
+				isGrounded = false;
+                anim.SetTrigger("Jump");
+            } else {
+				print ("Couldn't jump" + isGrounded + jumped);
 			}
 		}
+        else if (Input.GetKey(KeyCode.S))
+        {
+            if (isGrounded)
+            {
+                crawling = true;
+                anim.SetBool("Crawl", true);
+                col2D.size = new Vector2(.25f, 0.2f);
+            }
+        }
+        else
+        {
+            if (crawling)
+            {
+                crawling = false;
+                anim.SetBool("Crawl", false);
+                col2D.size = new Vector2(.4f, 0.6f);
+            }
+        }
+
+        anim.SetBool("isGrounded", isGrounded);
 
 	}
 
@@ -74,7 +111,6 @@ public class playerMovement : MonoBehaviour {
 	} 
 
 	bool IsGrounded() { 
-
 
 		// After landing, the Y velocity fluctuates between a bunch of really low numbers for ~1s.
 		// Safer to check if it's lower than 0.1 than 0.0
@@ -94,6 +130,11 @@ public class playerMovement : MonoBehaviour {
 		print ("Y velocity > 0");
 		return false;
 	}
+
+    public void PlayFootstep()
+    {
+        AudioController.Instance.Footstep();
+    }
 
     public void Equip(bool activate, Item item)
     {

@@ -12,6 +12,7 @@ public class AudioController : MonoBehaviour
     public List<AudioSource> Channels = new List<AudioSource>();
 
     public string[] GeneralSFX;
+    public string[] Footsteps;
 
     public AudioSource currentlyPlaying;
 
@@ -130,6 +131,22 @@ public class AudioController : MonoBehaviour
                 channel.Stop();
             }
         }
+    }
+
+    int lastStep = -1;
+    public void Footstep()
+    {
+        int index = UnityEngine.Random.Range(0, Footsteps.Length);
+
+        if (index == lastStep)
+        {
+            Footstep();
+            return;
+        }
+
+        PlaySFX(Footsteps[index]);
+
+        lastStep = index;
     }
 
     IEnumerator PlayTempChannel(AudioClip clip)

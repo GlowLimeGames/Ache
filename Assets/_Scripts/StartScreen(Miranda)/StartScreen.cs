@@ -12,17 +12,18 @@ public class StartScreen : MonoBehaviour {
 
 	//Which scene starts the game?
 		Debug.Log("StartGame");
+	}
+
+	public void StartGame() {
 		SceneManager.LoadScene ("Preface");
 	}
 		
 		
-	public void Exit(){
-	
-
+	public void ExitGame()
+	{
 	Debug.Log ("Exit");
 	Application.Quit ();
 
 	}
-
 
 }
