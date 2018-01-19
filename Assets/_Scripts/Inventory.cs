@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 [Serializable]
@@ -55,6 +56,7 @@ public class Inventory : MonoBehaviour {
     public Transform inventoryBar;
 
     playerMovement Player;
+	private GameManager gameManager;
 
     public static Inventory Instance
     {
@@ -73,12 +75,28 @@ public class Inventory : MonoBehaviour {
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
+
+	void OnEnable()
+	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
+		gameManager = GameObject.FindObjectOfType<GameManager> ();
+	}
+
+	void OnDisable()
+	{
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
 
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<playerMovement>();
+		
+		if (gameManager.gameplayScene) {
+			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
+		} else {
+			Player = null;
+		}
     }
 
     public void AddItem(int itemID)
@@ -173,4 +191,18 @@ public class Inventory : MonoBehaviour {
 
         SetHighlight(InventorySlots[selectedSlot], false);
     }
+
+	void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+		// Hide inventory if it's not in a gameplay scene
+		print("Checking the gameplay scene now");
+		//if (gameManager.gameplayScene) {
+		if (scene.name == "Preface") {
+			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
+			// Yes, that is the default scale of the inventory canvas
+			gameObject.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
+		} else {
+			Player = null;
+			gameObject.transform.localScale = new Vector3 (0, 0, 0);
+		}
+	}
 }
