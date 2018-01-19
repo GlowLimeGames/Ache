@@ -16,6 +16,6 @@ public class Door : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		SceneManager.LoadScene ("Forest");
+		SceneManager.LoadScene ("Attaining BirdSeed");
 	}
 }

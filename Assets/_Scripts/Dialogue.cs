@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class Line {
@@ -46,7 +47,7 @@ public class Dialogue : MonoBehaviour {
 	public Transform bubbleLeft;   // the prefabs
 	public Transform bubbleRight;
 
-	public TextAsset script;
+	private string scriptPath;
 
 	public bool sceneRunning;
 	private Transform activeBubble;
@@ -71,10 +72,43 @@ public class Dialogue : MonoBehaviour {
 	private float defaultZoom = 5.0f;
 	private float sceneZoom = 4.0f;
 
+	private static Dialogue instance = null;
+	public static Dialogue Instance
+	{
+		get
+		{
+			return instance;
+		}
+	}
+
+	void Awake()
+	{
+		if (instance)
+		{
+			DestroyImmediate(gameObject);
+			return;
+		}
+		instance = this;
+	}
+
+	// Need to reload the script at every scene load, so load these delegates here
+	void OnEnable()
+	{
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+
+	void OnDisable()
+	{
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
+
 	// Use this for initialization
 	void Start() {
-		//scriptJson = System.IO.File.ReadAllText (scriptPath);
-		scriptJson = script.text;
+		// Initialize scene and script, probably garbage since it's the title screen first
+		Scene scene = SceneManager.GetSceneAt (0);
+		scriptPath = _selectScript (scene);
+		scriptJson = System.IO.File.ReadAllText (scriptPath);
+
 		scriptJson = "{\"Items\":" + scriptJson + "}";
 		gameScript = JsonHelper.FromJson<Line>(scriptJson);
 
@@ -87,10 +121,10 @@ public class Dialogue : MonoBehaviour {
 
 	public void StartScene (string sceneTag) {
 
+		// Update camera, old one may have been destroyed
+		cam = Camera.main;
 
-		
 		bubbleIndex = GetSceneStartIndex(sceneTag);
-		print ("bubbleIndex is" + bubbleIndex);
 
 		sceneRunning = true;
 
@@ -239,6 +273,33 @@ public class Dialogue : MonoBehaviour {
 			return bubbleRight;
 		} else {
 			return bubbleLeft;
+		}
+	}
+
+	private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+		// Select and reload the script whenever a new scene is loaded
+		scriptPath = _selectScript (scene);
+		scriptJson = System.IO.File.ReadAllText (scriptPath);
+
+		scriptJson = "{\"Items\":" + scriptJson + "}";
+		gameScript = JsonHelper.FromJson<Line>(scriptJson);
+	}
+
+	private string _selectScript(Scene scene) {
+		//print (SceneManager.GetActiveScene ().name);
+		//string filename;
+		//print (SceneManager.GetSceneAt(0).name);
+		switch (scene.name) {
+		case "Preface":
+			return "./Assets/_Dialogue/Preface Dialogue.txt";
+			break;
+		// TODO Need real scene name for this one
+		case "Forest":
+			return "./Assets/_Dialogue/Level 1 Dialogue.txt";
+			break;
+		default:
+			return "./Assets/_Dialogue/Level 1 Dialogue.txt";
+			break;
 		}
 	}
 		
