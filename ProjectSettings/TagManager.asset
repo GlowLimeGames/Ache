@@ -11,6 +11,7 @@ TagManager:
   - Sunflower
   - Tree
   - MetalShard
+  - Monster
   layers:
   - Default
   - TransparentFX

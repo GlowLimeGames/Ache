@@ -15,6 +15,7 @@ public class playerMovement : MonoBehaviour {
 	public LayerMask isGround;
 	bool isGrounded, jumped;
     bool crawling = false;
+	public int HP;
     BoxCollider2D col2D;
 	//public Transform groundCheck; 
 
@@ -28,6 +29,7 @@ public class playerMovement : MonoBehaviour {
         col2D = GetComponent<BoxCollider2D>();
 		anim = GetComponent < Animator> (); 
 
+		HP = 3;
 	}
 
 	// Update is called once per frame
@@ -38,6 +40,10 @@ public class playerMovement : MonoBehaviour {
 		flipPlayer (horizontal);
 		isGrounded = IsGrounded ();
         CheckAttack();
+
+		if (HP <= 0) {
+			anim.SetTrigger ("Die");
+		}
 	
 	}
 
@@ -150,4 +156,13 @@ public class playerMovement : MonoBehaviour {
     {
 
     }
+
+	// TODO: Collisions aren't happening yet
+	void OnCollisionEnter2D(Collision2D coll) {
+		print ("Collision happened");
+		if (coll.gameObject.tag == "Monster") {
+			print ("It was the monster");
+			HP -= 1;
+		}
+	}
 }

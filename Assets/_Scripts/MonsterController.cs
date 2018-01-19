@@ -109,4 +109,9 @@ public class MonsterController : MonoBehaviour {
 		yield return new WaitForSeconds (1.0f);
 		Destroy (gameObject);
 	}
+
+	void OnCollisionEnter(Collision2D coll) {
+		print ("Monster collision happened");
+		print (coll.gameObject);
+	}
 }
