@@ -5,6 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/_preload.unity
+    guid: f9026f59f617641d88baa905b7c3b668
   - enabled: 1
+    path: Assets/_Scenes/StartScreen.unity
+    guid: 460044661f2608c43b86f6411531f1b7
+  - enabled: 1
+    path: Assets/_Scenes/Preface.unity
+    guid: e49afe7fc720e463eaee945038147464
+  - enabled: 0
     path: Assets/_Scenes/Dialogue.unity
     guid: d4861e9261cf9467dbb152e08c412940
