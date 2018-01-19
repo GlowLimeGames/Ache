@@ -13,9 +13,11 @@ public class MetalShardPuzzle : MonoBehaviour {
 	void Start (){
 		anim = crow.GetComponent<Animator> ();
 		crowFull = false;
+		Inventory.Instance.AddItem (2);
 	}
 
-	void OnCollisionEnter(Collision coll){
+	void OnCollisionEnter2D(Collision2D coll){
+		print ("OnCollisionEnter2D Called");
 		if (coll.gameObject.tag == "BirdSeed") {
 			//Not sure if the following line is necessary
 			birdSeed = coll.gameObject;

@@ -12,20 +12,19 @@ public class ShadowJumpScareStop : MonoBehaviour {
 
 	void Start (){
 		anim = shadow.GetComponent<Animator> ();
-	}
-	void OnCollisionEnter(Collision coll){
-		if (coll.gameObject.tag == "Player") {
-			//shadow.GetComponent<Renderer>().enabled = false;
-			//			if (shadow.Renderer.isVisible () == false) {
-			//				//Have shadow pop up x distance away from player
-			//				Vector3 position = new Vector3 (Random.Range (-10.0f, 10.0f), Random.Range (-10.0f, 10.0f), 0);
-			//				Instantiate (shadow, position, Quaternion.identity);
-			//			} 
-			//			else if (shadow.isVisible () == false) {
-			//
-			//			}
-			anim.SetTrigger("ShadowFadeOut");
 
+	}
+	void OnTriggerEnter2D(Collider2D coll){
+		if (coll.gameObject.tag == "Player") {
+			anim.SetTrigger("ShadowFadeOut");
+			StartCoroutine (pause ());
 		}
+	}
+
+	IEnumerator pause(){
+		print(Time.time);
+		yield return new WaitForSeconds(2);
+		print(Time.time);
+		shadow.SetActive (false);
 	}
 }

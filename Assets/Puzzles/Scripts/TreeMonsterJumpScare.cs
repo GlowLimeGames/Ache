@@ -18,10 +18,10 @@ public class TreeMonsterJumpScare : MonoBehaviour {
 //		//}
 //	}
 
-	void OnTriggerEnter(Collider coll){
-		Debug.Log ("Trigger Set Off");
-		//if (coll.gameObject.tag == "Player") {
+	void OnTriggerEnter2D(Collider2D coll){
+		print ("Trigger Set Off");
+		if (coll.gameObject.tag == "Player") {
 			anim.SetTrigger ("TreeMonsterJumpScare");
-		//}
+		}
 	}
 }
