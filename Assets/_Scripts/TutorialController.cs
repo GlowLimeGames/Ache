@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class TutorialController : MonoBehaviour {
 
-	public Canvas canv;
+
 	public Transform speakerlessText;
-
-	public Dialogue dialogueManager;
-
 	public TextAsset script;
+
+	private Dialogue dialogueManager;
+	private Canvas canv;
 
 	public bool sceneRunning;
 	private Transform activeBubble;
@@ -22,6 +22,9 @@ public class TutorialController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		dialogueManager = Object.FindObjectOfType<Dialogue> ();
+		canv = GameObject.Find ("DialogueCanvas").GetComponent<Canvas> ();
+
 		//scriptJson = System.IO.File.ReadAllText (scriptPath);
 		scriptJson = script.text;
 		print (scriptJson);

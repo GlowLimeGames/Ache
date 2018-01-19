@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GuardianController : MonoBehaviour {
 
-	public Dialogue dialogueManager;
-	public GameManager gameManager;
+	private Dialogue dialogueManager;
+	private GameManager gameManager;
 
 	private string sceneTag;
 
 	// Use this for initialization
 	void Start () {
-		
+		dialogueManager = Object.FindObjectOfType<Dialogue> ();
+		gameManager = Object.FindObjectOfType<GameManager> ();
 	}
 	
 	// Update is called once per frame
