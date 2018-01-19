@@ -9,6 +9,9 @@ TagManager:
   - MetalShard
   - BirdSeed
   - Crow
+  - Tree
+  - Boulder
+  - Handle
   layers:
   - Default
   - TransparentFX
