@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EtrelleController : MonoBehaviour {
 
-	public Dialogue dialogueManager;
-	public GameManager gameManager;
+	private Dialogue dialogueManager;
+	private GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
-
+		dialogueManager = GameObject.FindObjectOfType<Dialogue> ();
+		gameManager = GameObject.FindObjectOfType<GameManager> ();
 	}
 	
 	// Update is called once per frame
@@ -35,14 +36,5 @@ public class EtrelleController : MonoBehaviour {
 
 			// TODO: etrelleHouse should be modulo however many there are, for looping
 		}
-
-		//if (!dialogueManager.sceneRunning) {
-		//	if (!gameManager.etrelleTalked) {
-		//		dialogueManager.StartScene ("etrelle_first");
-		//		gameManager.etrelleTalked = true;
-		//	} else {
-		//		dialogueManager.StartScene ("etrelle_second");
-		//	}
-		//}
 	}
 }
