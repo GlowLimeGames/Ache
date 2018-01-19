@@ -138,6 +138,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c687f496a2e1dfd42942f2cf60ea20ce, type: 3}
   - {fileID: 8300000, guid: df28bbf80988daf47b2d9254247ae2a5, type: 3}
   - {fileID: 8300000, guid: f0f38936c7e0e4f49bbd577b47ac2f22, type: 3}
+  - {fileID: 8300000, guid: 88653d763d3fa0d47b196bd0c4f141a3, type: 3}
+  - {fileID: 8300000, guid: faaa98377a50abf4894397ac4097dc45, type: 3}
   sfxList:
   - {fileID: 8300000, guid: ae40697aa4925de45b8a6e09824fc7b8, type: 3}
   - {fileID: 8300000, guid: 5a5fbdf0abdebca4498ab02679f5120e, type: 3}
@@ -160,6 +162,24 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a3bcf37f2d131b34ba8c7e197547efc0, type: 3}
   - {fileID: 8300000, guid: 4cf715e55d21543448185df041d3b8fd, type: 3}
   Channels: []
-  GeneralSFX: []
+  GeneralSFX:
+  - boulder crash
+  - boulder roll
+  - boulder roll sound
+  - crow single
+  - cutting sound
+  - enemy damage sound
+  - enemy damage sound 2
+  - many crows loop
+  - monster death sound
+  - player damage sound
+  - player death sound
+  Footsteps:
+  - footstep hard 1
+  - footstep hard 2
+  - footstep hard 3
+  - footstep hard 4
+  - footstep hard 5
+  - footstep hard 6
   currentlyPlaying: {fileID: 0}
   musicSource: {fileID: 82420192374135910}
