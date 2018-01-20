@@ -9,8 +9,11 @@ public class PushingBoulder : MonoBehaviour {
 	public GameObject crushedTree2;
 	public GameObject crushedTree3;
 	public GameObject stick;
+	public GameObject boulder;
+	private Animator anim;
 
 	void Start(){
+		anim = GetComponent<Animator> ();
 		crushedTree1.SetActive (false);
 		crushedTree2.SetActive (false);
 		crushedTree3.SetActive (false);
@@ -26,10 +29,18 @@ public class PushingBoulder : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
+		anim.SetTrigger ("BoulderExplosion");
+		StartCoroutine (pause ());
 		decayingTree.SetActive (false);
 		crushedTree1.SetActive (true);
 		crushedTree2.SetActive (true);
 		crushedTree3.SetActive (true);
 		stick.SetActive (true);
+
+	}
+
+	IEnumerator pause(){
+		yield return new WaitForSeconds(1);
+		boulder.SetActive (false);
 	}
 }

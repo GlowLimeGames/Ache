@@ -998,8 +998,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1401530332}
   - component: {fileID: 1401530333}
-  - component: {fileID: 1401530334}
   - component: {fileID: 1401530335}
+  - component: {fileID: 1401530334}
   m_Layer: 0
   m_Name: BirdSeed
   m_TagString: Untagged
