@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour {
 	
@@ -9,13 +10,14 @@ public class playerMovement : MonoBehaviour {
 	public float playerMovementSpeed; 
 	bool facingRight; 
 	Vector3 playerScale; 
-	Animator anim; 
+	public Animator anim; 
 	public Transform[] groundPoints; 
 	float groundRadius, jumpForce;  
 	public LayerMask isGround;
 	bool isGrounded, jumped;
     bool crawling = false;
 	public int HP;
+    bool dying = false;
     BoxCollider2D col2D;
 	//public Transform groundCheck; 
 
@@ -41,8 +43,10 @@ public class playerMovement : MonoBehaviour {
 		isGrounded = IsGrounded ();
         CheckAttack();
 
-		if (HP <= 0) {
+		if ((HP <= 0) && (!dying)) {
 			anim.SetTrigger ("Die");
+            dying = true;
+            StartCoroutine(Die());
 		}
 	
 	}
@@ -139,7 +143,8 @@ public class playerMovement : MonoBehaviour {
 
     public void PlayFootstep()
     {
-        AudioController.Instance.Footstep();
+        // TODO Re-enable
+        //AudioController.Instance.Footstep();
     }
 
     public void Equip(bool activate, Item item)
@@ -157,12 +162,23 @@ public class playerMovement : MonoBehaviour {
 
     }
 
-	// TODO: Collisions aren't happening yet
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(1.0f);
+        gameObject.SetActive(false);
+        SceneManager.LoadScene("Boss");
+    }
+
 	void OnCollisionEnter2D(Collision2D coll) {
-		print ("Collision happened");
-		if (coll.gameObject.tag == "Monster") {
-			print ("It was the monster");
-			HP -= 1;
+		if (coll.gameObject.CompareTag("Monster")) {
+            MonsterController monster = coll.gameObject.GetComponent<MonsterController>();
+            if (monster.action == MonsterController.Action.ATTACK)
+            {
+                HP -= 1;
+                print("Player HP is" + HP);
+            }
+            // No animation for getting hurt, so no indication...
+            //anim.Play("Hurt");
 		}
 	}
 }
