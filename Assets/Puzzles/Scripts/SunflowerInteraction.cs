@@ -6,19 +6,14 @@ public class SunflowerInteraction : MonoBehaviour {
 
 	public GameObject birdSeed;
 
-	// Use this for initialization
-	void Start () {
-
-	}
-
-	// Update is called once per frame
-	void Update () {
-
+	void Start(){
+		birdSeed.SetActive (false);
 	}
 
 	void OnMouseDown() {
-			//Drop birdseed so user can click on it to
-			//add to inventory
-			print ("Bird seed attained from sunflower");
+		//Drop birdseed so user can click on it to
+		//add to inventory
+		birdSeed.SetActive(true);
+		print ("Bird seed attained from sunflower");
 	}
 }

@@ -6,18 +6,9 @@ public class TransparentHouseInteraction : MonoBehaviour {
 
 	public GameObject shelter;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-	void OnCollisionEnter(Collision coll){
+	void OnTriggerEnter(Collider coll){
 		if (coll.gameObject.tag == "Player") {
+			print ("walked inside shelter");
 			//Make shelter transparent
 			Color tmp = shelter.GetComponent<SpriteRenderer>().color;
 			tmp.a = 0f;
