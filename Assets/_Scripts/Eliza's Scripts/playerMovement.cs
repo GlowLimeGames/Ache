@@ -76,7 +76,6 @@ public class playerMovement : MonoBehaviour {
 
 		//player jump
 		if (Input.GetKeyDown (KeyCode.W)) { 
-			Debug.Log ("W was pressed");
 			
 			jumped = true;
 
