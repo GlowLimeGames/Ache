@@ -18,6 +18,8 @@ public class MonsterController : MonoBehaviour {
     private BoxCollider2D bc;
     private MonsterWeapon weapon;
 
+    public Canvas deathCanvas;
+
 	public enum Action {
 		SEEK,
 		ATTACK,
@@ -28,6 +30,7 @@ public class MonsterController : MonoBehaviour {
 
 	public Action action;
 	public bool rage;
+    private bool dying;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +43,8 @@ public class MonsterController : MonoBehaviour {
         bc = GetComponent<BoxCollider2D>();
         weapon = GetComponentInChildren<MonsterWeapon>();
         weapon.Deactivate();
+        deathCanvas.gameObject.SetActive(false);
+        dying = false;
     }
 	
 	// Update is called once per frame
@@ -86,7 +91,8 @@ public class MonsterController : MonoBehaviour {
 			rage = true;
 		}
 
-		if (HP <= 0) {
+		if ((HP <= 0) && (!dying)) {
+            dying = true;
 			anim.Play ("Die");
 			StartCoroutine (DestroyAfterDeath ());
 		}
@@ -124,6 +130,7 @@ public class MonsterController : MonoBehaviour {
 
 	IEnumerator DestroyAfterDeath() {
 		yield return new WaitForSeconds (1.0f);
+        deathCanvas.gameObject.SetActive(true);
 		Destroy (gameObject);
 	}
 }

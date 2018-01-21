@@ -145,8 +145,7 @@ public class playerMovement : MonoBehaviour {
 
     public void PlayFootstep()
     {
-        // TODO Re-enable
-        //AudioController.Instance.Footstep();
+        AudioController.Instance.Footstep();
     }
 
     public void Equip(bool activate, Item item)
@@ -168,7 +167,7 @@ public class playerMovement : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
         gameObject.SetActive(false);
-        SceneManager.LoadScene("Boss");
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     IEnumerator DeactivateWeapon()
