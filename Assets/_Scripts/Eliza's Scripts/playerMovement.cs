@@ -19,11 +19,13 @@ public class playerMovement : MonoBehaviour {
 	public int HP;
     bool dying = false;
     BoxCollider2D col2D;
+    public PlayerWeapon weapon;
 	//public Transform groundCheck; 
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent <Rigidbody2D> (); 
+		rb = GetComponent <Rigidbody2D> ();
+        weapon = GetComponentInChildren<PlayerWeapon>();
 		jumpForce = 250;
 		groundRadius = .1f;
 		facingRight = true;  
@@ -32,6 +34,7 @@ public class playerMovement : MonoBehaviour {
 		anim = GetComponent < Animator> (); 
 
 		HP = 3;
+        weapon.Deactivate();
 	}
 
 	// Update is called once per frame
@@ -58,6 +61,8 @@ public class playerMovement : MonoBehaviour {
             if (isGrounded)
             {
                 anim.SetTrigger("Attack");
+                weapon.Activate();
+                StartCoroutine(DeactivateWeapon());
             }
         }
     }
@@ -80,9 +85,7 @@ public class playerMovement : MonoBehaviour {
 				rb.AddForce (new Vector2 (0, jumpForce));
 				isGrounded = false;
                 anim.SetTrigger("Jump");
-            } else {
-				print ("Couldn't jump" + isGrounded + jumped);
-			}
+            }
 		}
         else if (Input.GetKey(KeyCode.S))
         {
@@ -137,7 +140,6 @@ public class playerMovement : MonoBehaviour {
 			}
 			//returns false if the velocity of the player is greater then 0 . 
 		}
-		print ("Y velocity > 0");
 		return false;
 	}
 
@@ -169,16 +171,9 @@ public class playerMovement : MonoBehaviour {
         SceneManager.LoadScene("Boss");
     }
 
-	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.gameObject.CompareTag("Monster")) {
-            MonsterController monster = coll.gameObject.GetComponent<MonsterController>();
-            if (monster.action == MonsterController.Action.ATTACK)
-            {
-                HP -= 1;
-                print("Player HP is" + HP);
-            }
-            // No animation for getting hurt, so no indication...
-            //anim.Play("Hurt");
-		}
-	}
+    IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.7f);
+        weapon.Deactivate();
+    }
 }

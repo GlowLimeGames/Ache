@@ -16,6 +16,7 @@ public class MonsterController : MonoBehaviour {
 
 	private float deltaX;
     private BoxCollider2D bc;
+    private MonsterWeapon weapon;
 
 	public enum Action {
 		SEEK,
@@ -37,6 +38,8 @@ public class MonsterController : MonoBehaviour {
 		action = Action.ROAR;
 		StartCoroutine ("StartSeek");
         bc = GetComponent<BoxCollider2D>();
+        weapon = GetComponentInChildren<MonsterWeapon>();
+        weapon.Deactivate();
     }
 	
 	// Update is called once per frame
@@ -57,12 +60,13 @@ public class MonsterController : MonoBehaviour {
 				transform.Translate (Time.deltaTime * maxSpeed, 0, 0);
 			}
 		} else if (action == Action.ATTACK) {
-            bc.size = new Vector2(0.75f, 0.79f);
+            weapon.Activate();
 			if (rage) {
 				anim.Play ("AttackTwice");
 			} else {
 				anim.Play ("AttackOnce");
 			}
+            StartCoroutine(DeactivateWeapon());
 			action = Action.DELAY;
             //anim.Play("Idle");
 			StartCoroutine (StopStun ());
@@ -112,26 +116,14 @@ public class MonsterController : MonoBehaviour {
 		action = Action.SEEK;
 	}
 
+    IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.7f);
+        weapon.Deactivate();
+    }
+
 	IEnumerator DestroyAfterDeath() {
 		yield return new WaitForSeconds (1.0f);
 		Destroy (gameObject);
-	}
-
-	void OnCollisionEnter2D(Collision2D coll) {
-		//print ("Monster collision happened");
-		//print (coll.gameObject);
-        if (coll.gameObject.CompareTag("Player"))
-        {
-            playerMovement player = coll.gameObject.GetComponent<playerMovement>();
-            if (player.anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            {
-                HP -= 1;
-                print("Monster HP is " + HP);
-                anim.Play("Idle");
-                action = Action.DELAY;
-                StartCoroutine(StopStun());
-            }
-
-        }
 	}
 }

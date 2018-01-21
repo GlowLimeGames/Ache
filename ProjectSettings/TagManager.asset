@@ -12,6 +12,8 @@ TagManager:
   - Tree
   - MetalShard
   - Monster
+  - PlayerWeapon
+  - MonsterWeapon
   layers:
   - Default
   - TransparentFX
