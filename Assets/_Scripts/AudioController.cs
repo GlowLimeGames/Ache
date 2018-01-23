@@ -31,12 +31,10 @@ public class AudioController : MonoBehaviour
     {
         if (instance)
         {
-            DestroyImmediate(gameObject);
+            DestroyImmediate(this);
             return;
         }
         instance = this;
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayMusic(AudioClip clip)

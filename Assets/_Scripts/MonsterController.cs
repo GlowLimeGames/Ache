@@ -15,6 +15,10 @@ public class MonsterController : MonoBehaviour {
 	public bool facingLeft;
 
 	private float deltaX;
+    private BoxCollider2D bc;
+    private MonsterWeapon weapon;
+
+    public Canvas deathCanvas;
 
 	public enum Action {
 		SEEK,
@@ -26,6 +30,7 @@ public class MonsterController : MonoBehaviour {
 
 	public Action action;
 	public bool rage;
+    private bool dying;
 
 	// Use this for initialization
 	void Start () {
@@ -35,11 +40,17 @@ public class MonsterController : MonoBehaviour {
 		//action = Action.SEEK;
 		action = Action.ROAR;
 		StartCoroutine ("StartSeek");
-	}
+        bc = GetComponent<BoxCollider2D>();
+        weapon = GetComponentInChildren<MonsterWeapon>();
+        weapon.Deactivate();
+        deathCanvas.gameObject.SetActive(false);
+        dying = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if (action == Action.SEEK) {
+            bc.size = new Vector2(0.5f, 0.79f);
 			if (_playerToLeft ()) {
 				if (!facingLeft) {
 					_Flip ();
@@ -54,12 +65,15 @@ public class MonsterController : MonoBehaviour {
 				transform.Translate (Time.deltaTime * maxSpeed, 0, 0);
 			}
 		} else if (action == Action.ATTACK) {
+            weapon.Activate();
 			if (rage) {
 				anim.Play ("AttackTwice");
 			} else {
 				anim.Play ("AttackOnce");
 			}
+            StartCoroutine(DeactivateWeapon());
 			action = Action.DELAY;
+            //anim.Play("Idle");
 			StartCoroutine (StopStun ());
 		}
 	}
@@ -67,7 +81,7 @@ public class MonsterController : MonoBehaviour {
 	void LateUpdate() {
 		deltaX = (player.transform.position.x - transform.position.x);
 
-		if (Mathf.Abs (deltaX) < 0.5f) {
+		if (Mathf.Abs (deltaX) < 1.2f) {
 			if (action != Action.DELAY) {
 				action = Action.ATTACK;
 			}
@@ -77,7 +91,8 @@ public class MonsterController : MonoBehaviour {
 			rage = true;
 		}
 
-		if (HP <= 0) {
+		if ((HP <= 0) && (!dying)) {
+            dying = true;
 			anim.Play ("Die");
 			StartCoroutine (DestroyAfterDeath ());
 		}
@@ -96,17 +111,26 @@ public class MonsterController : MonoBehaviour {
 	}
 
 	IEnumerator StopStun() {
-		yield return new WaitForSeconds (3.0f);
+		yield return new WaitForSeconds (1.5f);
+        anim.Play("Seek");
 		action = Action.SEEK;
 	}
 
 	IEnumerator StartSeek() {
-		yield return new WaitForSeconds (2.0f);
+		yield return new WaitForSeconds (1.5f);
+        anim.Play("Seek");
 		action = Action.SEEK;
 	}
 
+    IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.7f);
+        weapon.Deactivate();
+    }
+
 	IEnumerator DestroyAfterDeath() {
 		yield return new WaitForSeconds (1.0f);
+        deathCanvas.gameObject.SetActive(true);
 		Destroy (gameObject);
 	}
 }

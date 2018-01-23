@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour {
 	
@@ -9,18 +10,22 @@ public class playerMovement : MonoBehaviour {
 	public float playerMovementSpeed; 
 	bool facingRight; 
 	Vector3 playerScale; 
-	Animator anim; 
+	public Animator anim; 
 	public Transform[] groundPoints; 
 	float groundRadius, jumpForce;  
 	public LayerMask isGround;
 	bool isGrounded, jumped;
     bool crawling = false;
+	public int HP;
+    bool dying = false;
     BoxCollider2D col2D;
+    public PlayerWeapon weapon;
 	//public Transform groundCheck; 
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent <Rigidbody2D> (); 
+		rb = GetComponent <Rigidbody2D> ();
+        weapon = GetComponentInChildren<PlayerWeapon>();
 		jumpForce = 250;
 		groundRadius = .1f;
 		facingRight = true;  
@@ -28,6 +33,8 @@ public class playerMovement : MonoBehaviour {
         col2D = GetComponent<BoxCollider2D>();
 		anim = GetComponent < Animator> (); 
 
+		HP = 3;
+        weapon.Deactivate();
 	}
 
 	// Update is called once per frame
@@ -38,6 +45,12 @@ public class playerMovement : MonoBehaviour {
 		flipPlayer (horizontal);
 		isGrounded = IsGrounded ();
         CheckAttack();
+
+		if ((HP <= 0) && (!dying)) {
+			anim.SetTrigger ("Die");
+            dying = true;
+            StartCoroutine(Die());
+		}
 	
 	}
 
@@ -48,6 +61,8 @@ public class playerMovement : MonoBehaviour {
             if (isGrounded)
             {
                 anim.SetTrigger("Attack");
+                weapon.Activate();
+                StartCoroutine(DeactivateWeapon());
             }
         }
     }
@@ -61,7 +76,6 @@ public class playerMovement : MonoBehaviour {
 
 		//player jump
 		if (Input.GetKeyDown (KeyCode.W)) { 
-			Debug.Log ("W was pressed");
 			
 			jumped = true;
 
@@ -70,9 +84,7 @@ public class playerMovement : MonoBehaviour {
 				rb.AddForce (new Vector2 (0, jumpForce));
 				isGrounded = false;
                 anim.SetTrigger("Jump");
-            } else {
-				print ("Couldn't jump" + isGrounded + jumped);
-			}
+            }
 		}
         else if (Input.GetKey(KeyCode.S))
         {
@@ -127,7 +139,6 @@ public class playerMovement : MonoBehaviour {
 			}
 			//returns false if the velocity of the player is greater then 0 . 
 		}
-		print ("Y velocity > 0");
 		return false;
 	}
 
@@ -149,5 +160,18 @@ public class playerMovement : MonoBehaviour {
     public void Use(Item item)
     {
 
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(1.0f);
+        gameObject.SetActive(false);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator DeactivateWeapon()
+    {
+        yield return new WaitForSeconds(0.7f);
+        weapon.Deactivate();
     }
 }
