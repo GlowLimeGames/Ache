@@ -54,8 +54,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SetGameplayScene(Scene scene, LoadSceneMode mode) {
-		//// TODO: More than just the preface obviously
-		if (scene.name == "Preface") {
+		if ((scene.name != "StartScreen") && (scene.name != "TheEnd")) {
 			gameplayScene = true;
 		} else {
 			gameplayScene = false;

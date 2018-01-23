@@ -11,6 +11,10 @@ TagManager:
   - Sunflower
   - Tree
   - MetalShard
+  - Monster
+  - PlayerWeapon
+  - MonsterWeapon
+  - ChoiceCanvas
   layers:
   - Default
   - TransparentFX

@@ -292,14 +292,13 @@ public class Dialogue : MonoBehaviour {
 		switch (scene.name) {
 		case "Preface":
 			return "./Assets/_Dialogue/Preface Dialogue.txt";
-			break;
 		// TODO Need real scene name for this one
 		case "Forest":
 			return "./Assets/_Dialogue/Level 1 Dialogue.txt";
-			break;
+        case "ForgivenessEnding":
+            return "./Assets/_Dialogue/Ending (Forgiveness Route).txt";
 		default:
 			return "./Assets/_Dialogue/Level 1 Dialogue.txt";
-			break;
 		}
 	}
 		
