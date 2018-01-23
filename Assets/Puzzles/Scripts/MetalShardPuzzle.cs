@@ -11,6 +11,7 @@ public class MetalShardPuzzle : MonoBehaviour {
 	private bool crowFull;
 
 	void Start (){
+		metalShard.SetActive (false);
 		anim = crow.GetComponent<Animator> ();
 		crowFull = false;
 		Inventory.Instance.AddItem (2);
@@ -24,7 +25,7 @@ public class MetalShardPuzzle : MonoBehaviour {
 			Fly ();
 		}
 		else if(coll.gameObject.tag == "Crow"){
-			anim.SetTrigger ("StartEating");
+			anim.SetTrigger ("CrowEating");
 			DropShard ();
 			crowFull = true;
 			Fly ();
@@ -48,9 +49,8 @@ public class MetalShardPuzzle : MonoBehaviour {
 	//Crow drops the shard to eat the birdseed (animation called?) 
 	private void DropShard(){
 		//Add metal shard to inventory
+		Inventory.Instance.AddItem(3);
+		metalShard.SetActive (true);
 		print ("metal shard attained");
-		//Item(Sprite image, string type, int iD, int damage)
-		//Item metalShardItem = new Item (metalShard.GetComponent(SpriteRenderer), "Metal Shard", 1, 0);
-			//AddItem(metalShardItem);
 	}
 }
