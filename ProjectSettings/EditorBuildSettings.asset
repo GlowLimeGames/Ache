@@ -17,6 +17,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Puzzles/Scenes/AttainingBirdSeed.unity
     guid: 38f2f495149d64b61b521059411ce54c
+  - enabled: 1
+    path: Assets/Puzzles/Scenes/AttainingHandle.unity
+    guid: 540b8e55bbccb4c81b9b3b6b511fc48c
+  - enabled: 1
+    path: Assets/Puzzles/Scenes/AttainingMetalShard.unity
+    guid: 460aed26e09d44d14aa0234ed9167db8
+  - enabled: 1
+    path: Assets/Puzzles/Scenes/AttainingBinding.unity
+    guid: 23b61c595014e4550a2422f10306ae78
+  - enabled: 1
+    path: Assets/_Scenes/Boss.unity
+    guid: 8a6e9680392104644a20242c41fdeb1d
+  - enabled: 1
+    path: Assets/_Scenes/ForgivenessEnding.unity
+    guid: bb666b335c2aeba448ba6197509d38a1
+  - enabled: 1
+    path: Assets/_Scenes/TheEnd.unity
+    guid: 6a82f7aa80f07ed42b6acd0def2aac09
   - enabled: 0
     path: Assets/_Scenes/Dialogue.unity
     guid: d4861e9261cf9467dbb152e08c412940

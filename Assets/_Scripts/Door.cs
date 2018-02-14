@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour {
 
+    public int SceneToLoad;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -16,6 +18,6 @@ public class Door : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		SceneManager.LoadScene ("Attaining BirdSeed");
+		SceneManager.LoadScene (SceneToLoad);
 	}
 }

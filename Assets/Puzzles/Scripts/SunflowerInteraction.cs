@@ -11,9 +11,12 @@ public class SunflowerInteraction : MonoBehaviour {
 	}
 
 	void OnMouseDown() {
-		//Drop birdseed so user can click on it to
-		//add to inventory
-		birdSeed.SetActive(true);
+        //Drop birdseed so user can click on it to
+        //add to inventory
+        if (birdSeed != null)
+        {
+            birdSeed.SetActive(true);
+        }
 		print ("Bird seed attained from sunflower");
 	}
 }

@@ -60,9 +60,12 @@ public class playerMovement : MonoBehaviour {
         {
             if (isGrounded)
             {
-                anim.SetTrigger("Attack");
-                weapon.Activate();
-                StartCoroutine(DeactivateWeapon());
+                if (Inventory.Instance.HasItem(4))
+                {
+                    anim.SetTrigger("Attack");
+                    weapon.Activate();
+                    StartCoroutine(DeactivateWeapon());
+                }
             }
         }
     }
@@ -159,7 +162,14 @@ public class playerMovement : MonoBehaviour {
 
     public void Use(Item item)
     {
+        Inventory.Instance.RemoveItem(item.iD);
+    }
 
+    public void BogKill()
+    {
+        anim.SetTrigger("Die-Bog");
+        dying = true;
+        StartCoroutine(Die());
     }
 
     IEnumerator Die()

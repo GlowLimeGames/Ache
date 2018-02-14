@@ -9,23 +9,23 @@ public class MetalShardPuzzle : MonoBehaviour {
 	public GameObject metalShard;
 	private Animator anim;
 	private bool crowFull;
+    private bool canUse = false;
 
 	void Start (){
 		metalShard.SetActive (false);
 		anim = crow.GetComponent<Animator> ();
 		crowFull = false;
-		Inventory.Instance.AddItem (2);
 	}
 
-	void OnCollisionEnter2D(Collision2D coll){
+	void OnTriggerEnter2D(Collider2D coll){
 		print ("OnCollisionEnter2D Called");
-		if (coll.gameObject.tag == "BirdSeed") {
+		if (coll.tag == "Player") {
 			//Not sure if the following line is necessary
 			birdSeed = coll.gameObject;
-			Fly ();
+            canUse = true;
 		}
-		else if(coll.gameObject.tag == "Crow"){
-			anim.SetTrigger ("CrowEating");
+		else if(coll.tag == "Crow"){
+			anim.SetTrigger ("StartEating");
 			DropShard ();
 			crowFull = true;
 			Fly ();
@@ -33,8 +33,27 @@ public class MetalShardPuzzle : MonoBehaviour {
 		}
 	}
 
-	//Crow flies towards where on the ground the player placed the birdseed
-	private void Fly (){
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            canUse = false;
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (!canUse)
+        {
+            return;
+        }
+
+        Fly();
+        canUse = false;
+    }
+
+    //Crow flies towards where on the ground the player placed the birdseed
+    private void Fly (){
 		if (crowFull == false) {
 			anim.SetTrigger ("FlyToBirdSeed");
 			crow.transform.position = Vector2.MoveTowards 

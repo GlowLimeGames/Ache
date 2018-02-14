@@ -117,8 +117,47 @@ public class Inventory : MonoBehaviour {
         GameObject currentSlot = InventorySlots[CurrentItems.Count];
 
         currentSlot.transform.GetChild(0).GetComponent<Image>().sprite = item.image;
+        if (itemID != 3)
+        {
+            currentSlot.transform.GetChild(0).localScale = Vector3.one * 3f;
+        }
         currentSlot.GetComponent<Button>().onClick.AddListener(delegate () { Select(item, currentSlot); });
         CurrentItems.Add(item);
+    }
+
+    public bool HasItem(int iD)
+    {
+        foreach (Item eachItem in CurrentItems)
+        {
+            if (eachItem.iD == iD)
+            {
+                return true;
+            }
+        }
+        
+
+        return false;
+    }
+
+    public void RemoveItem(int itemID)
+    {
+        Item item = ItemData[0];
+        int itemNumber = 0;
+        foreach (Item eachItem in CurrentItems)
+        {
+            if (eachItem.iD == itemID)
+            {
+                item = eachItem;
+                break;
+            }
+            itemNumber++;
+        }
+
+        GameObject currentSlot = InventorySlots[itemNumber];
+
+        currentSlot.transform.GetChild(0).GetComponent<Image>().sprite = null;
+        currentSlot.GetComponent<Button>().onClick.RemoveListener(delegate () { Select(item, currentSlot); });
+        CurrentItems.Remove(item);
     }
 
     void SetHighlight(GameObject button, bool active)
@@ -195,8 +234,8 @@ public class Inventory : MonoBehaviour {
 		// GameManager's OnSceneLoaded seems to trigger after this, so it's not useful
 		GameManager.Instance.SetGameplayScene(scene, mode);
 		if (GameManager.Instance.gameplayScene) {
-		//if (scene.name == "Preface") {
-			Player = GameObject.FindGameObjectWithTag ("Player").GetComponent<playerMovement> ();
+            //if (scene.name == "Preface") {
+            Player = GameObject.FindGameObjectWithTag("Player").GetComponent<playerMovement>();
 			// Yes, that is the default scale of the inventory canvas
 			gameObject.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
 		} else {
