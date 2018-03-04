@@ -25,7 +25,8 @@ public class PushingBoulder : MonoBehaviour {
 			Vector3 temp = new Vector3(3.0f,0,0);
 			coll.transform.position += temp;
 			transform.Rotate(Vector3.right * Time.deltaTime);
-		}
+            AudioController.Instance.PlaySFX("boulder roll sound");
+        }
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
@@ -36,7 +37,8 @@ public class PushingBoulder : MonoBehaviour {
 		crushedTree2.SetActive (true);
 		crushedTree3.SetActive (true);
 		stick.SetActive (true);
-
+        AudioController.Instance.StopSFX("boulder roll sound");
+        AudioController.Instance.PlaySFX("boulder crash");
 	}
 
 	IEnumerator pause(){

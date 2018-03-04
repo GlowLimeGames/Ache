@@ -29,6 +29,7 @@ public class PlayerWeapon : MonoBehaviour {
     {
         if (other.tag == "Monster")
         {
+            AudioController.Instance.PlaySFX("enemy damage sound 2");
             MonsterController monster = other.GetComponent<MonsterController>();
             monster.HP -= 1;
             print("Monster HP now is " + monster.HP);

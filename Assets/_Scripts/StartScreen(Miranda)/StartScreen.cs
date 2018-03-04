@@ -8,15 +8,16 @@ using UnityEngine.UI;
 public class StartScreen : MonoBehaviour {
 
 	public void Start(){
-	
 
-	//Which scene starts the game?
+        AudioController.Instance.PlayMusic("theme2");
 		Debug.Log("StartGame");
 	}
 
 	public void StartGame() {
-		SceneManager.LoadScene ("Preface");
-	}
+        AudioController.Instance.StopMusic();
+        SceneManager.LoadScene ("Preface");
+        AudioController.Instance.PlayMusic("music box");
+    }
 		
 		
 	public void ExitGame()

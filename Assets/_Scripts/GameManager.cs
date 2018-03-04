@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void SetGameplayScene(Scene scene, LoadSceneMode mode) {
-		if ((scene.name != "StartScreen") && (scene.name != "TheEnd") && (scene.name != "_preload")) {
+		if ((scene.name != "StartScreen") && (scene.name != "TheEnd") && (scene.name != "ForgivenessEnding") && (scene.name != "_preload")) {
 			gameplayScene = true;
 		} else {
 			gameplayScene = false;

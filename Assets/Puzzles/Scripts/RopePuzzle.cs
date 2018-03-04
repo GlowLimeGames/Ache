@@ -15,14 +15,13 @@ public class RopePuzzle : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision coll){
-		if (coll.gameObject.tag == "MetalShard") {
+		if (coll.gameObject.tag == "Player") {
 			print ("rope attained, now they are combined" +
 				"to make the sword");
 			//Not sure if the following line is necessary
 			metalShard = coll.gameObject;
-			//remove metal shard from inventory
-
-			binding.SetActive (true);
+            //remove metal shard from inventory
+            binding.SetActive (true);
 		}
 	}
 }

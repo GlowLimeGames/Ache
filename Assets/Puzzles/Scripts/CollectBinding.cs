@@ -12,7 +12,8 @@ public class CollectBinding : MonoBehaviour {
         Inventory.Instance.RemoveItem(0);
         Inventory.Instance.RemoveItem(1);
         Inventory.Instance.RemoveItem(3);
-        
+
+        AudioController.Instance.PlaySFX("cutting sound");
         Inventory.Instance.AddItem(4);
 	}
 }

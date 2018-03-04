@@ -37,8 +37,10 @@ public class AudioController : MonoBehaviour
         instance = this;
     }
 
-    public void PlayMusic(AudioClip clip)
+    public void PlayMusic(string songName)
     {
+        AudioClip clip = GetMusic(songName);
+
         if (musicSource.clip != clip)
         {
             musicSource.Stop();

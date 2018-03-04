@@ -174,6 +174,7 @@ public class playerMovement : MonoBehaviour {
 
     IEnumerator Die()
     {
+        AudioController.Instance.PlaySFX("player death sound");
         yield return new WaitForSeconds(1.0f);
         gameObject.SetActive(false);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);

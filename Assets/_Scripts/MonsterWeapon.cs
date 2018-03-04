@@ -29,6 +29,7 @@ public class MonsterWeapon : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+            AudioController.Instance.PlaySFX("player damage sound");
             playerMovement player = other.GetComponent<playerMovement>();
             player.HP -= 1;
             print("Player HP now is " + player.HP);

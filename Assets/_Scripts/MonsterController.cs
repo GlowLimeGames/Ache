@@ -95,7 +95,8 @@ public class MonsterController : MonoBehaviour {
             dying = true;
 			anim.Play ("Die");
 			StartCoroutine (DestroyAfterDeath ());
-		}
+            AudioController.Instance.PlaySFX("monster death sound");
+        }
 	}
 
 	private void _Flip() {
